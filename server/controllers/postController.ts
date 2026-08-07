@@ -2,8 +2,8 @@ import { AuthRequest } from "../middleware/authMiddleware.js";
 import { Request, Response } from "express";
 import { Groq } from "groq-sdk";
 import axios from "axios";
-import { cloudinary } from "../config/cloudinary.js";
 import supabase from "../config/supabase.js";
+import { uploadFileToStorage } from "../services/storageService.js";
 import { processDuePosts } from "../services/schedulerService.js";
 import fs from "fs";
 import path from "path";
@@ -101,25 +101,21 @@ export const generatePost = async (
 
       try {
         console.log("Generating AI image for prompt:", cleanPrompt);
-        const uploadResult = await cloudinary.uploader.upload(pollinationsUrl, {
-          folder: "ai_generations",
+        const response = await axios.get(pollinationsUrl, {
+          responseType: "arraybuffer",
+          timeout: 15000,
         });
-        mediaUrl = uploadResult.secure_url;
-      } catch (err: any) {
-        console.warn("Cloudinary upload failed, attempting direct buffer fetch...", err?.message || err);
-        try {
-          const response = await axios.get(pollinationsUrl, { responseType: "arraybuffer", timeout: 15000 });
-          const base64Image = Buffer.from(response.data, "binary").toString("base64");
-          const dataUri = `data:image/jpeg;base64,${base64Image}`;
+        const imageBuffer = Buffer.from(response.data);
 
-          const uploadResult = await cloudinary.uploader.upload(dataUri, {
-            folder: "ai_generations",
-          });
-          mediaUrl = uploadResult.secure_url;
-        } catch (bufErr: any) {
-          console.warn("AI generation timeout, using domain-matched fallback photo:", fallbackImageUrl);
-          mediaUrl = fallbackImageUrl;
-        }
+        mediaUrl = await uploadFileToStorage(
+          imageBuffer,
+          `ai-${seed}.jpg`,
+          "image/jpeg",
+          "ai_generations"
+        );
+      } catch (err: any) {
+        console.warn("AI generation upload to Supabase Storage failed, using domain-matched fallback photo:", fallbackImageUrl, err?.message || err);
+        mediaUrl = fallbackImageUrl;
       }
     }
 
@@ -269,22 +265,15 @@ export const schedulePost = async (
 
     if (req.file) {
       try {
-        const result = await new Promise<any>((resolve, reject) => {
-          const stream = cloudinary.uploader.upload_stream(
-            { resource_type: "auto", folder: "social-scheduler" },
-            (error, result) => {
-              if (error) {
-                console.error("CLOUDINARY UPLOAD ERROR:", error);
-                reject(error);
-              } else resolve(result);
-            },
-          );
-          stream.end(req.file!.buffer);
-        });
-        mediaUrl = result.secure_url;
-        mediaType = result.resource_type === "video" ? "video" : "image";
+        mediaUrl = await uploadFileToStorage(
+          req.file.buffer,
+          req.file.originalname,
+          req.file.mimetype,
+          "social-scheduler"
+        );
+        mediaType = req.file.mimetype.startsWith("video/") ? "video" : "image";
       } catch (uploadErr: any) {
-        console.warn("Cloudinary upload failed (403/Error). Falling back to local storage...");
+        console.warn("Supabase Storage upload failed. Falling back to local storage...", uploadErr?.message || uploadErr);
         try {
           const uploadsDir = path.join(process.cwd(), "uploads");
           if (!fs.existsSync(uploadsDir)) {
@@ -301,7 +290,7 @@ export const schedulePost = async (
           mediaType = req.file.mimetype.startsWith("video/") ? "video" : "image";
         } catch (localErr: any) {
           console.error("Local upload fallback failed:", localErr);
-          res.status(500).json({ message: "Media upload failed on both Cloudinary and local storage." });
+          res.status(500).json({ message: "Media upload failed on both Supabase Storage and local storage." });
           return;
         }
       }
