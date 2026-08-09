@@ -3,11 +3,14 @@ import { processDuePosts } from "../services/schedulerService.js";
 
 /**
  * Inngest cron function: checks for due posts every minute and publishes them.
- * Replaces the old node-cron `*/10 * * * * *` polling loop.
+ * Replaces the old node-cron polling loop that ran every 10 seconds.
  */
 export const processDuePostsCron = inngest.createFunction(
-  { id: "process-due-posts-cron", name: "Process Due Posts (Cron)" },
-  { cron: "* * * * *" }, // Every minute
+  {
+    id: "process-due-posts-cron",
+    name: "Process Due Posts (Cron)",
+    triggers: [{ cron: "* * * * *" }],
+  },
   async ({ step }) => {
     const result = await step.run("check-and-publish-due-posts", async () => {
       await processDuePosts();
@@ -22,8 +25,11 @@ export const processDuePostsCron = inngest.createFunction(
  * Used by the /api/posts/cron endpoint and after scheduling a post.
  */
 export const processDuePostsEvent = inngest.createFunction(
-  { id: "process-due-posts-event", name: "Process Due Posts (Event)" },
-  { event: "post/check.due" },
+  {
+    id: "process-due-posts-event",
+    name: "Process Due Posts (Event)",
+    triggers: [{ event: "post/check.due" }],
+  },
   async ({ step }) => {
     const result = await step.run("check-and-publish-due-posts", async () => {
       await processDuePosts();
