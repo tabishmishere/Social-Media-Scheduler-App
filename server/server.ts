@@ -7,7 +7,9 @@ import socialAuthRouter from "./routes/socialAuthRoutes.js";
 import accountRouter from "./routes/accountRoute.js";
 import postRouter from "./routes/postRoutes.js";
 import activityRouter from "./routes/activityRoute.js";
-import { initScheduler } from "./services/schedulerService.js";
+import { serve } from "inngest/express";
+import { inngest } from "./config/inngest.js";
+import { inngestFunctions } from "./inngest/inngestFunctions.js";
 
 import path from "path";
 import fs from "fs";
@@ -44,11 +46,7 @@ app.use("/api/oauth", socialAuthRouter);
 app.use("/api/accounts", accountRouter);
 app.use("/api/posts", postRouter);
 app.use("/api/activity", activityRouter);
-
-// Initialize cron scheduler only in persistent local/server environments
-if (!process.env.VERCEL) {
-  initScheduler();
-}
+app.use("/api/inngest", serve({ client: inngest, functions: inngestFunctions }));
 
 // Global error handler
 app.use((err: any, _req: Request, res: Response, _next: NextFunction) => {
