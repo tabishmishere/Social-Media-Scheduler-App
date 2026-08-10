@@ -5,8 +5,6 @@ import axios from "axios";
 import supabase from "../config/supabase.js";
 import { uploadFileToStorage } from "../services/storageService.js";
 import { processDuePosts } from "../services/schedulerService.js";
-import fs from "fs";
-import path from "path";
 
 // Generate Post
 // POST /api/posts/generate
@@ -113,6 +111,7 @@ export const generatePost = async (
           "image/jpeg",
           "ai_generations"
         );
+        console.log("generatePost: AI mediaUrl returned", mediaUrl);
       } catch (err: any) {
         console.warn("AI generation upload to Supabase Storage failed, using domain-matched fallback photo:", fallbackImageUrl, err?.message || err);
         mediaUrl = fallbackImageUrl;
@@ -263,7 +262,18 @@ export const schedulePost = async (
     let mediaUrl: string | undefined = req.body.mediaUrl;
     let mediaType: "image" | "video" | undefined = req.body.mediaType;
 
+    console.log("schedulePost called", {
+      hasFile: !!req.file,
+      bodyMediaUrl: req.body.mediaUrl,
+      bodyMediaType: req.body.mediaType,
+    });
+
     if (req.file) {
+      console.log("schedulePost: received uploaded file", {
+        originalname: req.file.originalname,
+        mimetype: req.file.mimetype,
+        size: req.file.size,
+      });
       try {
         mediaUrl = await uploadFileToStorage(
           req.file.buffer,
@@ -272,29 +282,23 @@ export const schedulePost = async (
           "social-scheduler"
         );
         mediaType = req.file.mimetype.startsWith("video/") ? "video" : "image";
+        console.log("schedulePost: Supabase public mediaUrl returned", mediaUrl);
       } catch (uploadErr: any) {
-        console.warn("Supabase Storage upload failed. Falling back to local storage...", uploadErr?.message || uploadErr);
-        try {
-          const uploadsDir = path.join(process.cwd(), "uploads");
-          if (!fs.existsSync(uploadsDir)) {
-            fs.mkdirSync(uploadsDir, { recursive: true });
-          }
-          const ext = path.extname(req.file.originalname) || (req.file.mimetype.includes("video") ? ".mp4" : ".png");
-          const filename = `${Date.now()}-${Math.random().toString(36).substring(2, 8)}${ext}`;
-          const filePath = path.join(uploadsDir, filename);
-          fs.writeFileSync(filePath, req.file.buffer);
-
-          const host = req.headers.host || "localhost:3000";
-          const protocol = req.protocol || "http";
-          mediaUrl = `${protocol}://${host}/uploads/${filename}`;
-          mediaType = req.file.mimetype.startsWith("video/") ? "video" : "image";
-        } catch (localErr: any) {
-          console.error("Local upload fallback failed:", localErr);
-          res.status(500).json({ message: "Media upload failed on both Supabase Storage and local storage." });
-          return;
-        }
+        console.error("schedulePost: Supabase Storage upload failed:", uploadErr?.message || uploadErr);
+        res.status(500).json({ message: "Media upload failed. Please try again." });
+        return;
       }
+    } else if (mediaUrl) {
+      console.log("schedulePost: using client-provided mediaUrl", mediaUrl);
     }
+
+    console.log("schedulePost: saving post", {
+      contentLength: content?.length,
+      platforms: parsedPlatforms,
+      scheduledFor,
+      mediaUrl,
+      mediaType,
+    });
 
     const userId = req.user._id || req.user.id;
     const { data: post, error } = await supabase
@@ -312,6 +316,13 @@ export const schedulePost = async (
       ])
       .select()
       .single();
+
+    if (post) {
+      console.log("schedulePost: post created", {
+        postId: post.id,
+        media_url: post.media_url,
+      });
+    }
 
     if (error || !post) {
       res.status(500).json({ message: error?.message || "Failed to schedule post" });
