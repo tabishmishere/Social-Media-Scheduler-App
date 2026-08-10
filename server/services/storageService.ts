@@ -1,7 +1,7 @@
 import supabase from "../config/supabase.js";
 import path from "path";
 
-const BUCKET_NAME = "media";
+const BUCKET_NAME = "social media scheduler media";
 
 /**
  * Uploads a file buffer to Supabase Storage bucket.
