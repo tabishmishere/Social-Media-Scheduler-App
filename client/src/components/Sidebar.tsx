@@ -77,7 +77,7 @@ function Sidebar({ isOpen, setIsOpen }: { isOpen: boolean, setIsOpen: (val: bool
                     </div>
                 </div>
 
-                <button onClick={logout} className='mt-1 flex items-center gap-2 px-3 py-2 w-full rounded-lg text-sm text-slate-500 hover:bg-rose-50 hover:text-rose-600 transition-all duration-150 font-medium'>
+                <button onClick={logout} className='mt-1 flex items-center gap-2 px-3 py-2 w-full rounded-lg text-sm text-slate-500 hover:bg-indigo-50 hover:text-indigo-600 transition-all duration-150 font-medium'>
                     <LogOutIcon className='size-4' />
                     Sign Out
                 </button>
