@@ -25,7 +25,7 @@ function Dashboard() {
         const activitiesData = activityRes.data
 
         const publishedFromPosts = posts.filter((p: any) => p.status === 'published').length
-        const publishedFromActivities = activitiesData.filter((a: any) => 
+        const publishedFromActivities = activitiesData.filter((a: any) =>
           a.actionType === 'POST_PUBLISHED' || a.description?.toLowerCase().includes('published')
         ).length
 

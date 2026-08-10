@@ -34,7 +34,7 @@ export default function Login() {
   };
 
   useEffect(() => {
-    if(user) navigate('/dashboard')
+    if (user) navigate('/dashboard')
   }, [user])
 
   return (

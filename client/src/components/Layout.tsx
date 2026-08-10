@@ -13,14 +13,14 @@ const pageTitles: Record<string, string> = {
 
 
 const Layout = () => {
-  
-  const {isAuthenticated, isLoading} = useAuth();
+
+  const { isAuthenticated, isLoading } = useAuth();
   const location = useLocation();
 
   const title = pageTitles[location.pathname.toLowerCase()] || "SocialAI";
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
-  if(isLoading){
+  if (isLoading) {
     return (
       <div className="flex h-screen items-center justify-center bg-slate-50">
         <div className="size-8 border-4 border-indigo-600 border-t-transparent rounded-full animate-spin" />
@@ -28,8 +28,8 @@ const Layout = () => {
     )
   }
 
-  if(!isAuthenticated){
-    return <Navigate to="/login" replace/>
+  if (!isAuthenticated) {
+    return <Navigate to="/login" replace />
   }
 
   return (

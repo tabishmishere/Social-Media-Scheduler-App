@@ -81,10 +81,10 @@ const Schedular = () => {
 
     try {
       await api.delete(`/api/posts/${postId}`);
-      
+
       setPosts((prev) => prev.filter((p) => p._id !== postId));
       toast.success("Post deleted successfully");
-      
+
     } catch (error: any) {
       console.error("Error deleting post:", error);
       toast.error(error?.response?.data?.message || "Failed to delete post");
@@ -172,7 +172,7 @@ const Schedular = () => {
                   )}
 
                   <button type="button" onClick={() => setMedilaFile(null)} className="absolute top-2 right-2 size-7 bg-slate-900/60 hover:bg-slate-900/80 text-white rounded-full flex items-center justify-center transition-colors">
-                  <XIcon className="size-3.5"/>
+                    <XIcon className="size-3.5" />
                   </button>
                 </div>
               ) : (
@@ -190,17 +190,17 @@ const Schedular = () => {
               <div>
                 <label className="block text-xs text-slate-500 uppercase mb-2 font-medium">Date</label>
                 <div className="relative">
-                  <CalendarIcon className="size-4 absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none"/>
+                  <CalendarIcon className="size-4 absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none" />
 
-                  <input type="date" required className="w-full pl-10 pr-4 py-2.5 bg-slate-50 border border-slate-200 rounded-lg text-slate-900 text-sm outline-none focus:border-indigo-500 focus:bg-white transition-all" value={scheduleDate} onChange={(e) => setScheduleDate(e.target.value)}/>
+                  <input type="date" required className="w-full pl-10 pr-4 py-2.5 bg-slate-50 border border-slate-200 rounded-lg text-slate-900 text-sm outline-none focus:border-indigo-500 focus:bg-white transition-all" value={scheduleDate} onChange={(e) => setScheduleDate(e.target.value)} />
                 </div>
               </div>
               <div>
                 <label className="block text-xs text-slate-500 uppercase mb-2 font-medium">Time</label>
                 <div className="relative">
-                  <ClockIcon className="size-4 absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none"/>
+                  <ClockIcon className="size-4 absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none" />
 
-                  <input type="time" required className="w-full pl-10 pr-4 py-2.5 bg-slate-50 border border-slate-200 rounded-lg text-slate-900 text-sm outline-none focus:border-indigo-500 focus:bg-white transition-all" value={scheduleTime} onChange={(e) => setScheduleTime(e.target.value)}/>
+                  <input type="time" required className="w-full pl-10 pr-4 py-2.5 bg-slate-50 border border-slate-200 rounded-lg text-slate-900 text-sm outline-none focus:border-indigo-500 focus:bg-white transition-all" value={scheduleTime} onChange={(e) => setScheduleTime(e.target.value)} />
                 </div>
               </div>
             </div>
@@ -210,13 +210,13 @@ const Schedular = () => {
             <button type="submit" disabled={loading} className="btn-animate w-full flex items-center justify-center gap-2 py-3.5 bg-indigo-600 hover:bg-indigo-700 transition-all text-white rounded-lg font-medium shadow-sm hover:shadow-indigo-500/20 active:scale-95">
               {loading ? (
                 <>
-                <div className="size-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
-                Scheduling...
+                  <div className="size-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                  Scheduling...
                 </>
-              ): (
+              ) : (
                 <>
-                Schedule Post
-                <ArrowRightIcon className="size-4"/>
+                  Schedule Post
+                  <ArrowRightIcon className="size-4" />
                 </>
               )}
             </button>
@@ -230,7 +230,7 @@ const Schedular = () => {
         {/* Upcoming */}
         <div className="bg-white rounded-2xl border border-slate-200 overflow-hidden">
           <div className="flex items-center gap-2.5 px-5 py-4 border-b border-slate-100">
-            <CalendarDaysIcon className="size-4 text-indigo-600"/>
+            <CalendarDaysIcon className="size-4 text-indigo-600" />
             <h3 className="text-slate-900 text-sm font-medium">Upcoming</h3>
             <span className="ml-auto text-xs font-bold bg-indigo-50 text-indigo-600 px-2.5 py-0.5 rounded-full border border-indigo-100/60">{scheduled.length}</span>
           </div>
@@ -244,7 +244,7 @@ const Schedular = () => {
                     <div className="flex gap-1.5 items-center">
                       {post.platforms.map((pl: string) => {
                         const meta = PLATFORMS.find((p) => p.id === pl);
-                        return meta ? <meta.icon key = {pl} className = "size-3.5 text-slate-400"/> : null
+                        return meta ? <meta.icon key={pl} className="size-3.5 text-slate-400" /> : null
                       })}
                     </div>
 
@@ -262,7 +262,7 @@ const Schedular = () => {
                       {post.mediaType && <span className="text-xs bg-slate-100 text-slate-600 border border-slate-200 px-1.5 py-0.5 rounded-md font-semibold capitalize">{post.mediaType}</span>}
 
                       <span className="text-xs text-slate-500">{new Date(post.scheduledFor).toLocaleString()}</span>
-                      
+
                       <button
                         onClick={() => handleDelete(post._id)}
                         className="text-slate-400 hover:text-rose-600 hover:bg-rose-50 p-1.5 rounded-md transition-colors"
@@ -286,7 +286,7 @@ const Schedular = () => {
 
         <div className="bg-white rounded-2xl border border-slate-200 overflow-hidden flex flex-col min-h-0 flex-1">
           <div className="flex items-center gap-2.5 px-5 py-4 border-b border-slate-100 shrink-0">
-            <SendIcon className="size-4 text-indigo-600"/>
+            <SendIcon className="size-4 text-indigo-600" />
             <h3 className="text-slate-900 text-sm font-medium">Published</h3>
             <span className="ml-auto text-xs font-bold bg-indigo-50 text-indigo-600 px-2.5 py-0.5 rounded-full border border-indigo-100/60">{published.length}</span>
           </div>
@@ -300,7 +300,7 @@ const Schedular = () => {
                     <div className="flex gap-1.5 items-center">
                       {post.platforms.map((pl: string) => {
                         const meta = PLATFORMS.find((p) => p.id === pl);
-                        return meta ? <meta.icon key = {pl} className = "size-3.5 text-slate-400"/> : null
+                        return meta ? <meta.icon key={pl} className="size-3.5 text-slate-400" /> : null
                       })}
                     </div>
 
@@ -308,9 +308,9 @@ const Schedular = () => {
                       {post.mediaType && <span className="text-xs bg-slate-100 text-slate-600 border border-slate-200 px-1.5 py-0.5 rounded-md font-semibold capitalize">{post.mediaType}</span>}
 
                       <span className="text-xs text-slate-500">{new Date(post.updatedAt).toLocaleString()}</span>
-                      
+
                       <span className="text-xs bg-emerald-50 text-emerald-700 border border-emerald-100 px-2 py-0.5 rounded-full font-medium">Published</span>
-                      
+
                       <button
                         onClick={() => handleDelete(post._id)}
                         className="text-slate-400 hover:text-rose-600 hover:bg-rose-50 p-1.5 rounded-md transition-colors"
