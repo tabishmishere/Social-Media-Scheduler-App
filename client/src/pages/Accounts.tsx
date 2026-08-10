@@ -99,14 +99,14 @@ const Accounts = () => {
       {/* Header */}
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 text-sm">
         <div>
-          <h2 className="text-xl text-slate-900">Connected Accounts</h2>
-          <p>
+          <h2 className="text-xl text-slate-900 font-medium">Connected Accounts</h2>
+          <p className="text-slate-500 mt-0.5">
             {accounts.length} of {PLATFORMS.length} platforms connected
           </p>
         </div>
         <button
           onClick={() => setShowPlatformPicker(true)}
-          className="flex items-center gap-2 px-5 py-2.5 bg-red-500 hover:bg-red-600 text-white rounded-full font-medium transition-all w-full sm:w-auto justify-center"
+          className="btn-animate flex items-center gap-2 px-5 py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-full font-medium transition-all w-full sm:w-auto justify-center shadow-sm hover:shadow-indigo-500/20 active:scale-95"
         >
           <PlusIcon className="size-4" />
           Connect Account

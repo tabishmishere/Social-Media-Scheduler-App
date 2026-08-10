@@ -95,25 +95,25 @@ const AIComposer = () => {
   return (
     <div className="max-w-4xl mx-auto space-y-12 pb-20 animate-in fade-in duration-700">
       <div className="space-y-6 text-center mt-20">
-        <h1 className="text-3xl text-slate-700 tracking-tight">
+        <h1 className="text-3xl text-slate-800 font-medium tracking-tight">
           What should we create today?
         </h1>
 
         <div className="relative group mt-12">
           <textarea
-            className="w-full px-6 py-6 bg-white border border-slate-300 rounded-xl text-slate-900 placeholder-slate-400 outline-none focus:border-slate-400 transition resize-none h-40"
-            placeholder="Share your idea...(e.g. A post about the launch of our new eco-friendly coffee beans)"
+            className="w-full px-6 py-6 bg-white border border-slate-200 rounded-2xl text-slate-900 placeholder-slate-400 outline-none focus:border-indigo-500 transition resize-none h-40 shadow-xs"
+            placeholder="Share your idea... (e.g. A post about the launch of our new eco-friendly coffee beans)"
             value={prompt}
             onChange={(e) => setPrompt(e.target.value)}
           />
           <div className="absolute bottom-4 right-2.5 flex items-center gap-3 text-sm">
             <button
               onClick={() => setGenerateImage(!generateImage)}
-              className="flex items-center gap-3 bg-slate-50 py-2 px-3 rounded-lg"
+              className="flex items-center gap-3 bg-slate-50 border border-slate-200/80 py-2 px-3 rounded-xl hover:bg-slate-100 transition-colors"
             >
-              <span>AI Image</span>
+              <span className="text-slate-700 text-xs font-medium">AI Image</span>
               <div
-                className={`relative inline-flex h-5 w-9 shrink-0 cursor-pointer rounded-full transition-colors duration-200 ease-in-out focus:outline-none ${generateImage ? "bg-red-500" : "bg-slate-200"}`}
+                className={`relative inline-flex h-5 w-9 shrink-0 cursor-pointer rounded-full transition-colors duration-200 ease-in-out focus:outline-none ${generateImage ? "bg-indigo-600" : "bg-slate-200"}`}
               >
                 <span
                   className={`pointer-events-none size-4 transform translate-y-0.5 rounded-full bg-white transition ${
@@ -126,7 +126,7 @@ const AIComposer = () => {
             <button
               onClick={handleGenerate}
               disabled={loading}
-              className="bg-slate-900 hover:bg-slate-800 text-white flex items-center gap-2 px-4 py-2 rounded-lg"
+              className="btn-animate bg-indigo-600 hover:bg-indigo-700 text-white flex items-center gap-2 px-5 py-2.5 rounded-xl font-medium shadow-sm hover:shadow-indigo-500/20 active:scale-95 text-xs"
             >
               {loading ? (
                 <>
@@ -150,8 +150,8 @@ const AIComposer = () => {
               onClick={() => setTone(t)}
               className={`px-4 py-1.5 rounded-full text-sm transition-all border ${
                 tone === t
-                  ? "bg-red-500 border-red-500 text-white"
-                  : "bg-white border-slate-200 text-slate-500 hover:bg-slate-300"
+                  ? "bg-indigo-600 border-indigo-600 text-white font-medium shadow-2xs"
+                  : "bg-white border-slate-200 text-slate-600 hover:bg-slate-50 hover:border-slate-300"
               }`}
             >
               {t}
@@ -163,25 +163,25 @@ const AIComposer = () => {
       {/* AI Generated Posts */}
 
       <div className="space-y-6 pt-12 border-t border-slate-100">
-        <div className="flex items-center justify-between text-slate-600">
+        <div className="flex items-center justify-between text-slate-700">
           <div className="flex items-center gap-2">
-            <HistoryIcon className="size-5" />
-            <h2 className="text-xl">Recent Generations</h2>
+            <HistoryIcon className="size-5 text-indigo-600" />
+            <h2 className="text-xl font-medium">Recent Generations</h2>
           </div>
 
-          <span className="text-sm text-slate-500 bg-slate-50 px-2">{generations.length} total</span>
+          <span className="text-xs font-medium text-indigo-600 bg-indigo-50 border border-indigo-100 px-2.5 py-1 rounded-full">{generations.length} total</span>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
           {generations.map((gen) => (
-            <div key={gen._id} className="group bg-white rounded-2xl border border-slate-100 p-5 hover:border-red-200 transition-all relative overflow-hidden">
+            <div key={gen._id} className="group bg-white rounded-2xl border border-slate-200 p-5 hover:border-indigo-200 hover:bg-indigo-50/10 transition-all relative overflow-hidden flex flex-col justify-between shadow-xs">
               <div className="flex flex-col h-full space-y-4">
                 <div className="flex items-center justify-between">
-                  <span className="text-xs text-slate-400 uppercase tracking-widest">
+                  <span className="text-xs text-slate-400 uppercase tracking-widest font-medium">
                     {new Date(gen.createdAt).toLocaleString()}
                   </span>
 
-                  <span className="text-xs text-red-500 bg-red-50 px-2 py-0.5 rounded-md">{gen.tone}</span>
+                  <span className="text-xs text-indigo-600 bg-indigo-50 border border-indigo-100/60 px-2 py-0.5 rounded-md font-medium">{gen.tone}</span>
                 </div>
 
                 <p className="text-sm text-slate-600 line-clamp-3 leading-relaxed flex-1">
@@ -189,7 +189,7 @@ const AIComposer = () => {
                 </p>
 
                 {gen.mediaUrl && (
-                  <div className="rounded-xl overflow-hidden border border-slate-50 bg-slate-50">
+                  <div className="rounded-xl overflow-hidden border border-slate-100 bg-slate-50">
                     <img 
                       src={gen.mediaUrl} 
                       alt="Gen" 
@@ -202,7 +202,7 @@ const AIComposer = () => {
                 )}
 
                 <div className="flex items-center gap-2 pt-2">
-                  <button onClick={() => setActiveScheduler(gen)} className="flex-1 bg-slate-100 hover:bg-red-500 hover:text-white text-slate-600 text-xs py-2.5 rounded-lg transition-all">
+                  <button onClick={() => setActiveScheduler(gen)} className="flex-1 bg-indigo-50 hover:bg-indigo-600 hover:text-white text-indigo-600 font-medium text-xs py-2.5 rounded-lg transition-all">
                     Schedule Post
                   </button>
                 </div>
@@ -213,10 +213,10 @@ const AIComposer = () => {
           {
             generations.length === 0 && (
               <div className="col-span-full py-20 text-center space-y-2">
-                <div className="size-12 bg-slate-50 rounded-2xl flex items-center justify-center mx-auto text-slate-300">
+                <div className="size-12 bg-indigo-50 rounded-2xl flex items-center justify-center mx-auto text-indigo-500">
                   <Wand2Icon className="size-6" />
                 </div>
-                <p className="text-slate-400 text-sm">No content generated yet. Try generating some content using AI</p>
+                <p className="text-slate-500 text-sm">No content generated yet. Try generating some content using AI</p>
               </div>
             )
           }
@@ -228,18 +228,15 @@ const AIComposer = () => {
       {activeScheduler && (
         <div className="fixed inset-0 min-h-screen z-50 flex items-center justify-center p-4 bg-slate-900/40 backdrop-blur-md animate-in fade-in duration-300">
           
-          {/* Reverted back to max-w-2xl (original width) */}
-          <div className="bg-white rounded-xl shadow-2xl w-full max-w-2xl border border-slate-100 overflow-hidden flex flex-col max-h-[95vh]">
+          <div className="bg-white rounded-2xl shadow-2xl w-full max-w-2xl border border-slate-100 overflow-hidden flex flex-col max-h-[95vh]">
 
-            {/* Reduced header padding (py-3) */}
-            <div className="flex items-center justify-between px-5 py-3 border-b border-slate-100 bg-slate-50/30 ">
+            <div className="flex items-center justify-between px-5 py-4 border-b border-slate-100 bg-slate-50/50">
               <h3 className="text-slate-900 font-medium">Schedule Generator</h3>
-              <button onClick={() => setActiveScheduler(null)} className="p-1.5 rounded-full hover:bg-slate-100 text-slate-400 transition-colors">
+              <button onClick={() => setActiveScheduler(null)} className="p-1.5 rounded-full hover:bg-slate-100 text-slate-400 hover:text-slate-600 transition-colors">
                 <XIcon className="size-5" />
               </button>
             </div>
 
-            {/* Compressed padding and spacing so text area fills more vertical space */}
             <div className="flex-1 overflow-y-auto p-5 space-y-3">
               <div className="bg-slate-50 rounded-xl p-3.5 border border-slate-100">
                 <p className="text-slate-800 text-sm leading-relaxed whitespace-pre-wrap">{activeScheduler.prompt}</p>
@@ -260,18 +257,17 @@ const AIComposer = () => {
               </div>
             </div>
 
-            {/* Compressed footer padding (p-5 instead of p-6) to push content up */}
             <div className="p-5 bg-slate-50/50 border-t border-slate-100 space-y-4">
 
               {/* Options */}
               <div className="space-y-4">
                 <div>
-                  <label htmlFor="" className="block text-xs text-slate-600 uppercase tracking-widest mb-2.5">Selected Channels</label>
+                  <label htmlFor="" className="block text-xs text-slate-600 uppercase tracking-widest mb-2.5 font-medium">Selected Channels</label>
                   <div className="flex flex-wrap gap-2">
                     {PLATFORMS.map((p) => {
                       const active = selectedPlatforms.includes(p.id);
                       return (
-                        <button key={p.id} onClick={() => setSelectedPlatforms((prev) => (prev.includes(p.id) ? prev.filter((x) => x !== p.id) : [...prev, p.id]))} className={`p-2.5 rounded-md border text-xs transition-colors ${active ? "bg-red-500 border-red-500 text-white" : "bg-white border-slate-200 text-slate-400 hover:border-slate-300"}`}>
+                        <button key={p.id} onClick={() => setSelectedPlatforms((prev) => (prev.includes(p.id) ? prev.filter((x) => x !== p.id) : [...prev, p.id]))} className={`p-2.5 rounded-lg border text-xs transition-all ${active ? "bg-indigo-600 border-indigo-600 text-white font-medium shadow-2xs" : "bg-white border-slate-200 text-slate-500 hover:border-slate-300 hover:bg-slate-50"}`}>
                           <p.icon className="size-4.5" />
                         </button>
                       )
@@ -282,17 +278,17 @@ const AIComposer = () => {
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div className="relative">
                     <CalendarIcon className="size-4 absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
-                    <input type="date" className="w-full pl-9 pr-3 py-2 bg-white border border-slate-200 rounded-md text-slate-900 text-sm focus:outline-none focus:border-slate-400 transition-all shadow-sm" value={scheduledDate} onChange={(e) => setScheduledDate(e.target.value)} />
+                    <input type="date" className="w-full pl-9 pr-3 py-2 bg-white border border-slate-200 rounded-lg text-slate-900 text-sm focus:outline-none focus:border-indigo-500 transition-all shadow-2xs" value={scheduledDate} onChange={(e) => setScheduledDate(e.target.value)} />
                   </div>
                   
                   <div className="relative">
                     <ClockIcon className="size-4 absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
-                    <input type="time" className="w-full pl-9 pr-3 py-2 bg-white border border-slate-200 rounded-md text-slate-900 text-sm focus:outline-none focus:border-slate-400 transition-all shadow-sm" value={scheduledTime} onChange={(e) => setScheduledTime(e.target.value)} />
+                    <input type="time" className="w-full pl-9 pr-3 py-2 bg-white border border-slate-200 rounded-lg text-slate-900 text-sm focus:outline-none focus:border-indigo-500 transition-all shadow-2xs" value={scheduledTime} onChange={(e) => setScheduledTime(e.target.value)} />
                   </div>
                 </div>
               </div>
 
-              <button disabled={scheduling} onClick={handleSchedule} className="w-full flex items-center justify-center gap-2 py-2.5 rounded-md bg-slate-200 text-slate-700 hover:bg-red-500 hover:text-white disabled:opacity-70 disabled:cursor-not-allowed transition">
+              <button disabled={scheduling} onClick={handleSchedule} className="btn-animate w-full flex items-center justify-center gap-2 py-3 rounded-lg bg-indigo-600 text-white hover:bg-indigo-700 font-medium disabled:opacity-70 disabled:cursor-not-allowed transition shadow-sm hover:shadow-indigo-500/20 active:scale-95">
                 {scheduling ? <Loader2Icon className="size-4 animate-spin" /> : <TimerIcon className="size-4"/>}
                 {scheduling ? "Scheduling..." : "Schedule Post"}
               </button>

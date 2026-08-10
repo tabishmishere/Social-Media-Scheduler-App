@@ -44,7 +44,7 @@ export default function Login() {
           <div className="flex flex-col items-center mb-8">
             <Link to="/" className="flex items-center gap-2">
               <img src="/logo.svg" alt="Logo" className="size-6.5" />
-              <h1 className="text-2xl">Scheduler</h1>
+              <h1 className="text-2xl font-serif font-medium text-slate-800">Scheduler</h1>
             </Link>
             <p className="text-slate-500 text-sm mt-1">
               Sign in to your Dashboard
@@ -53,14 +53,14 @@ export default function Login() {
           <form onSubmit={handleSubmit} className="space-y-5 text-sm">
             {!loginState && (
               <div>
-                <label className="block mb-1.5">Name</label>
+                <label className="block mb-1.5 font-medium text-slate-700">Name</label>
                 <div className="relative">
                   <User2Icon className="size-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400" />
                   <input
                     type="text"
                     required
                     placeholder="Enter your name"
-                    className="w-full pl-10 pr-4 py-2.5 bg-slate-50 outline-slate-300 border border-slate-200 rounded-full"
+                    className="w-full pl-10 pr-4 py-2.5 bg-slate-50 border border-slate-200 rounded-full outline-none focus:border-indigo-500 focus:bg-white transition-all text-slate-900"
                     value={name}
                     onChange={(e) => setName(e.target.value)}
                   />
@@ -68,28 +68,28 @@ export default function Login() {
               </div>
             )}
             <div>
-              <label className="block mb-1.5">Email</label>
+              <label className="block mb-1.5 font-medium text-slate-700">Email</label>
               <div className="relative">
                 <MailIcon className="size-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400" />
                 <input
                   type="email"
                   required
                   placeholder="you@company.com"
-                  className="w-full pl-10 pr-4 py-2.5 bg-slate-50 outline-slate-300 border border-slate-200 rounded-full"
+                  className="w-full pl-10 pr-4 py-2.5 bg-slate-50 border border-slate-200 rounded-full outline-none focus:border-indigo-500 focus:bg-white transition-all text-slate-900"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                 />
               </div>
             </div>
             <div>
-              <label className="block mb-1.5">Password</label>
+              <label className="block mb-1.5 font-medium text-slate-700">Password</label>
               <div className="relative">
                 <LockIcon className="size-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400" />
                 <input
                   type={showPassword ? "text" : "password"}
                   required
                   placeholder="********"
-                  className="w-full pl-10 pr-10 py-2.5 bg-slate-50 outline-slate-300 border border-slate-200 rounded-full"
+                  className="w-full pl-10 pr-10 py-2.5 bg-slate-50 border border-slate-200 rounded-full outline-none focus:border-indigo-500 focus:bg-white transition-all text-slate-900"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                 />
@@ -110,7 +110,7 @@ export default function Login() {
             <button
               type="submit"
               disabled={loading}
-              className="w-full py-2.5 px-4 bg-linear-to-r from-red-600 to-red-500 text-white rounded-full text-sm transition-all disabled:opacity-60 flex items-center justify-center gap-2"
+              className="btn-animate w-full py-3 px-4 bg-gradient-to-r from-indigo-600 to-violet-600 hover:from-indigo-700 hover:to-violet-700 text-white rounded-full text-sm font-medium transition-all disabled:opacity-60 flex items-center justify-center gap-2 shadow-md hover:shadow-indigo-500/25 active:scale-95"
             >
               {loading ? (
                 "Signing in..."
@@ -129,7 +129,7 @@ export default function Login() {
                 Don't have an account?{" "}
                 <button
                   onClick={() => setLoginState(false)}
-                  className="text-red-600 hover:text-red-700"
+                  className="text-indigo-600 hover:text-indigo-700 font-medium cursor-pointer"
                 >
                   Create one free
                 </button>
@@ -139,7 +139,7 @@ export default function Login() {
                 Already have an account?{" "}
                 <button
                   onClick={() => setLoginState(true)}
-                  className="text-red-600 hover:text-red-700"
+                  className="text-indigo-600 hover:text-indigo-700 font-medium cursor-pointer"
                 >
                   Sign In
                 </button>

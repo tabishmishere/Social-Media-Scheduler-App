@@ -11,29 +11,29 @@ export default function HowItWorks() {
         <section id="how-it-works" className="py-24 bg-white">
             <div className="max-w-4xl mx-auto px-4 sm:px-6">
                 <div className="text-center mb-16">
-                    <div className="mb-6 inline-flex items-center gap-1.5 bg-red-500/10 border border-red-500/15 text-red-500 text-[11px] font-medium tracking-[0.06em] uppercase px-3.5 py-1.5 rounded-full">
+                    <div className="mb-6 inline-flex items-center gap-1.5 bg-indigo-50 border border-indigo-100 text-indigo-600 text-[11px] font-medium tracking-[0.06em] uppercase px-3.5 py-1.5 rounded-full">
                         <CheckCircleIcon className="size-3" />
                         Simple setup
                     </div>
-                    <h2 className="font-serif font-medium text-4xl sm:text-5xl leading-tight text-gray-900">
-                        Up and running in <span className="text-red-400 italic">minutes</span>
+                    <h2 className="font-serif font-medium text-4xl sm:text-5xl leading-tight text-slate-900">
+                        Up and running in <span className="text-indigo-600 italic">minutes</span>
                     </h2>
-                    <p className="mt-5 text-gray-500 max-w-lg mx-auto leading-relaxed">No complicated onboarding, no steep learning curve. Just connect, create, and grow.</p>
+                    <p className="mt-5 text-slate-500 max-w-lg mx-auto leading-relaxed">No complicated onboarding, no steep learning curve. Just connect, create, and grow.</p>
                 </div>
 
                 <div className="space-y-4">
                     {steps.map((s, i) => (
-                        <div key={s.step} className="card-hover flex gap-6 items-start p-6 rounded-2xl bg-slate-50/60 border border-slate-100 hover:border-red-100 hover:bg-red-50/20 transition-all cursor-pointer group">
-                            <div className="shrink-0 size-12 rounded-2xl bg-red-50 border border-red-100 flex items-center justify-center transition-transform duration-300 group-hover:scale-110 group-hover:rotate-3 shadow-sm">
-                                <span className="text-sm font-bold text-red-500">{s.step}</span>
+                        <div key={s.step} className="card-hover flex gap-6 items-start p-6 rounded-2xl bg-slate-50/60 border border-slate-100 hover:border-indigo-100 hover:bg-indigo-50/30 transition-all cursor-pointer group">
+                            <div className="shrink-0 size-12 rounded-2xl bg-indigo-50 border border-indigo-100 flex items-center justify-center transition-transform duration-300 group-hover:scale-110 group-hover:rotate-3 shadow-sm">
+                                <span className="text-sm font-bold text-indigo-600">{s.step}</span>
                             </div>
                             <div className="pt-1">
-                                <h3 className="text-slate-900 font-medium mb-1 group-hover:text-red-500 transition-colors">{s.title}</h3>
+                                <h3 className="text-slate-900 font-medium mb-1 group-hover:text-indigo-600 transition-colors">{s.title}</h3>
                                 <p className="text-slate-500 text-sm leading-relaxed">{s.description}</p>
                             </div>
                             {i < steps.length - 1 && (
                                 <div className="hidden sm:block ml-auto shrink-0 self-center">
-                                    <ArrowRightIcon className="size-4 text-slate-300 group-hover:text-red-400 group-hover:translate-x-1 transition-all" />
+                                    <ArrowRightIcon className="size-4 text-slate-300 group-hover:text-indigo-500 group-hover:translate-x-1 transition-all" />
                                 </div>
                             )}
                         </div>

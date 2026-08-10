@@ -23,9 +23,7 @@ const Layout = () => {
   if(isLoading){
     return (
       <div className="flex h-screen items-center justify-center bg-slate-50">
-        <div className="size-8 border-4 border-red-500 border-t-transparent rounded-full animate-spin" />
-
-        
+        <div className="size-8 border-4 border-indigo-600 border-t-transparent rounded-full animate-spin" />
       </div>
     )
   }
@@ -60,8 +58,8 @@ const Layout = () => {
           </button>
 
           <div>
-            <h1 className="text-slate-900">{title}</h1>
-            <p className="text-sm text-slate-400 hidden sm:block">
+            <h1 className="text-slate-900 font-medium text-lg">{title}</h1>
+            <p className="text-sm text-slate-500 hidden sm:block">
               Manage and automate your social presence
             </p>
           </div>

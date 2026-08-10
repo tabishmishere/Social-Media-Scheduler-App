@@ -25,15 +25,15 @@ export default function Navbar() {
                 </div>
 
                 {user ? (
-                    <Link to="/dashboard" className="btn-animate flex items-center gap-1.5 text-sm font-medium bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-full shadow-sm hover:shadow-red-500/20 active:scale-95">
+                    <Link to="/dashboard" className="btn-animate flex items-center gap-1.5 text-sm font-medium bg-indigo-600 hover:bg-indigo-700 text-white px-4.5 py-2 rounded-full shadow-sm hover:shadow-indigo-500/20 active:scale-95">
                         Go to Dashboard <ArrowRightIcon className="size-3.5" />
                     </Link>
                 ) : (
                     <div className="flex items-center gap-3">
-                        <Link to="/login" className="text-sm text-slate-600 hover:text-slate-900 hidden sm:block transition-colors active:scale-95">
+                        <Link to="/login" className="text-sm text-slate-600 hover:text-slate-900 hidden sm:block transition-colors active:scale-95 font-medium">
                             Sign In
                         </Link>
-                        <Link to="/login" className="btn-animate flex items-center gap-1.5 text-sm bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-full shadow-sm hover:shadow-red-500/20 active:scale-95">
+                        <Link to="/login" className="btn-animate flex items-center gap-1.5 text-sm bg-indigo-600 hover:bg-indigo-700 text-white px-4.5 py-2 rounded-full shadow-sm hover:shadow-indigo-500/20 active:scale-95 font-medium">
                             Get Started <ArrowRightIcon className="size-3.5" />
                         </Link>
                     </div>
