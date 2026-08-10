@@ -15,9 +15,9 @@ export default function Footer() {
                     <div className="lg:col-span-2">
                         <Link to="/" onClick={() => scrollTo(0, 0)} className="inline-flex items-center gap-2 mb-5">
                             <img src="/logo.svg" alt="logo" className="size-6" />
-                            <span className="font-medium font-serif text-xl text-gray-800">Scheduler</span>
+                            <span className="font-medium font-serif text-xl text-gray-800">Postflow</span>
                         </Link>
-                        <p className="text-sm text-gray-500 leading-relaxed max-w-xs">The AI-powered social media scheduler that helps creators and teams grow faster with less effort.</p>
+                        <p className="text-sm text-gray-500 leading-relaxed max-w-xs">Postflow is the AI-powered social media scheduler that helps creators and teams grow faster with less effort.</p>
                     </div>
 
                     {/* Links */}
@@ -39,7 +39,7 @@ export default function Footer() {
 
                 {/* Bottom bar */}
                 <div className="flex flex-col sm:flex-row items-center justify-between gap-4 pt-8" style={{ borderTop: "1px solid rgba(0,0,0,0.07)" }}>
-                    <p className="text-xs text-gray-400">© {new Date().getFullYear()} Scheduler. All rights reserved.</p>
+                    <p className="text-xs text-gray-400">© {new Date().getFullYear()} Postflow. All rights reserved.</p>
                     <div className="flex items-center gap-6">
                         <a href="#" className="text-xs text-gray-400 hover:text-gray-700">
                             Privacy Policy

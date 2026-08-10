@@ -6,7 +6,7 @@ const testimonials = [
         role: "Marketing Manager",
         avatar: "S",
         avatarBg: "from-indigo-500 to-violet-500",
-        text: "Scheduler has saved our team 10+ hours a week. The AI composer is genuinely impressive — it writes content that sounds like us.",
+        text: "Postflow has saved our team 10+ hours a week. The AI composer is genuinely impressive — it writes content that sounds like us.",
     },
     {
         name: "Marcus L.",
@@ -36,7 +36,7 @@ export default function Testimonials() {
                     <h2 className="font-serif font-medium text-4xl sm:text-5xl leading-tight text-slate-900">
                         Loved by <span className="text-indigo-600 italic">creators &amp; teams</span>
                     </h2>
-                    <p className="mt-5 text-slate-500 max-w-md mx-auto">Join thousands of people who automate their social media with Scheduler.</p>
+                    <p className="mt-5 text-slate-500 max-w-md mx-auto">Join thousands of people who automate their social media with Postflow.</p>
                 </div>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
                     {testimonials.map((t, i) => (

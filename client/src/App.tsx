@@ -4,7 +4,7 @@ import Login from "./pages/Login";
 import Dashboard from "./pages/Dashboard";
 import Accounts from "./pages/Accounts";
 import AIComposer from "./pages/AIComposer";
-import Scheduler from "./pages/Schedular";
+import Postflow from "./pages/Postflow";
 import Layout from "./components/Layout";
 import { Toaster } from "react-hot-toast";
 
@@ -18,7 +18,7 @@ export default function App() {
                 <Route element = {<Layout />}>
                     <Route path="/dashboard" element={<Dashboard />} />
                     <Route path="/accounts" element={<Accounts />} />
-                    <Route path="/schedule" element={<Scheduler />} />
+                    <Route path="/schedule" element={<Postflow />} />
                     <Route path="/ai-composer" element={<AIComposer />} />
                 </Route>
             </Routes>

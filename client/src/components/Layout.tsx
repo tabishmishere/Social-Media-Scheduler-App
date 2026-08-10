@@ -7,7 +7,7 @@ import { useAuth } from "../context/AuthContext";
 const pageTitles: Record<string, string> = {
   "/dashboard": "Dashboard",
   "/accounts": "Social Accounts",
-  "/schedule": "Post Scheduler",
+  "/schedule": "Postflow",
   "/ai-composer": "AI Composer",
 };
 

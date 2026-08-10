@@ -4,7 +4,7 @@ import { ArrowRightIcon, CalendarDaysIcon, CalendarIcon, ClockIcon, SendIcon, XI
 import api from "../api/axios";
 import toast from "react-hot-toast";
 
-const Schedular = () => {
+const Postflow = () => {
   const [posts, setPosts] = useState<any[]>([]);
   const [content, setContent] = useState("");
   const [scheduleDate, setScheduleDate] = useState("");
@@ -331,4 +331,4 @@ const Schedular = () => {
   );
 };
 
-export default Schedular;
+export default Postflow;

@@ -22,7 +22,7 @@ function Sidebar({ isOpen, setIsOpen }: { isOpen: boolean, setIsOpen: (val: bool
 
         { name: 'Dashboard', icon: LayoutDashboardIcon, path: '/dashboard' },
         { name: 'Accounts', icon: UsersIcon, path: '/accounts' },
-        { name: 'Schedular', icon: CalendarDaysIcon, path: '/schedule' },
+        { name: 'Postflow', icon: CalendarDaysIcon, path: '/schedule' },
         { name: 'AI Generator', icon: Wand2Icon, path: '/ai-composer' },
     ]
     return (
@@ -35,7 +35,7 @@ function Sidebar({ isOpen, setIsOpen }: { isOpen: boolean, setIsOpen: (val: bool
             <div className='p-6 pb-4'>
                 <div className='text-xl tracking-tight text-slate-800 flex items-center gap-1.5'>
                     <img src="/logo.svg" alt="logo" className='size-6' />
-                    Scheduler
+                    Postflow
                 </div>
             </div>
 

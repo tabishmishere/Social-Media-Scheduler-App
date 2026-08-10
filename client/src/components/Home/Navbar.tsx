@@ -10,7 +10,7 @@ export default function Navbar() {
             <div className="max-w-6xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
                 <Link to="/" onClick={() => window.scrollTo(0, 0)} className="flex items-center gap-2 group transition-transform active:scale-95">
                     <img src="/logo.svg" alt="logo" className="size-7 group-hover:rotate-12 transition-transform duration-300" />
-                    <span className="text-xl lg:text-2xl font-medium font-serif text-slate-800">Scheduler</span>
+                    <span className="text-xl lg:text-2xl font-medium font-serif text-slate-800">Postflow</span>
                 </Link>
                 <div className="hidden md:flex items-center gap-8 text-sm text-slate-500">
                     <a href="#features" className="hover:text-slate-900 transition-colors duration-200 hover:-translate-y-0.5 inline-block">

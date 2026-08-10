@@ -44,7 +44,7 @@ export default function Login() {
           <div className="flex flex-col items-center mb-8">
             <Link to="/" className="flex items-center gap-2">
               <img src="/logo.svg" alt="Logo" className="size-6.5" />
-              <h1 className="text-2xl font-serif font-medium text-slate-800">Scheduler</h1>
+              <h1 className="text-2xl font-serif font-medium text-slate-800">Postflow</h1>
             </Link>
             <p className="text-slate-500 text-sm mt-1">
               Sign in to your Dashboard
