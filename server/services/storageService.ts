@@ -18,6 +18,11 @@ export const uploadFileToStorage = async (
       path.extname(originalFilename) ||
       (mimeType.includes("video") ? ".mp4" : ".png");
     const uniqueFilename = `${folder}/${Date.now()}-${Math.random().toString(36).substring(2, 8)}${ext}`;
+    console.log("uploadFileToStorage: uploading file to Supabase", {
+      bucket: BUCKET_NAME,
+      path: uniqueFilename,
+      mimeType,
+    });
 
     const { data, error } = await supabase.storage
       .from(BUCKET_NAME)
@@ -35,7 +40,13 @@ export const uploadFileToStorage = async (
       .from(BUCKET_NAME)
       .getPublicUrl(uniqueFilename);
 
-    return publicUrlData.publicUrl;
+    const publicUrl = publicUrlData?.publicUrl;
+    if (!publicUrl) {
+      throw new Error("Failed to generate public URL for uploaded media");
+    }
+
+    console.log("Media uploaded successfully:", publicUrl);
+    return publicUrl;
   } catch (err: any) {
     console.error("Error in uploadFileToStorage:", err?.message || err);
     throw err;
