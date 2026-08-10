@@ -1,6 +1,6 @@
 # 🚀 Social Media Scheduler
 
-A full-stack social media scheduling application that empowers users to connect their social accounts, plan posts, and manage content seamlessly, featuring AI-assisted post generation.
+A full-stack social media scheduling application that empowers users to connect their social accounts, plan posts, and manage content seamlessly using Supabase, Zernio, and Groq.
 
 ## 🔗 Live Demo
 
@@ -21,24 +21,24 @@ A full-stack social media scheduling application that empowers users to connect 
 ### Backend
 *   **Runtime:** Node.js + Express
 *   **Language:** TypeScript (run via `tsx`)
-*   **Database:** MongoDB + Mongoose (hosted on MongoDB Atlas)
+*   **Database:** Supabase PostgreSQL
+*   **Storage:** Supabase Storage
 *   **Authentication:** JWT (JSON Web Tokens)
-*   **Media Storage:** Cloudinary
-*   **File Handling:** Multer
-*   **Task Scheduling:** `node-cron` (Note: configured for local/stateful environments)
-*   **AI Integrations:** Google Gemini AI / Groq SDK for content generation
+*   **Social Posting:** Zernio API
+*   **AI Integrations:** Groq SDK for text/image prompt generation
+*   **Task Scheduling:** Inngest cron and event functions served via `/api/inngest`
 
 ---
 
 ## ✨ Features
 
-*   **Secure Authentication:** User sign-up and sign-in utilizing JWT.
-*   **Social Connectivity:** OAuth integration to connect various social media accounts.
-*   **Content Management:** Create, schedule, edit, and manage social media posts from a centralized dashboard.
-*   **Automated Publishing:** Background scheduler automatically publishes posts at the user's defined time.
-*   **AI-Powered Assistance:** Generate engaging post content and suggestions using integrated AI (Gemini/Groq).
-*   **Activity Tracking:** Comprehensive activity log to monitor scheduled and published content.
-*   **Media Support:** Seamless image and video uploads powered by Cloudinary.
+*   **Secure Authentication:** User sign-up and sign-in with JWT.
+*   **Social Connectivity:** OAuth integration to connect social media accounts via Zernio.
+*   **Content Management:** Create, schedule, and manage social media posts from a centralized dashboard.
+*   **Automated Publishing:** Publish scheduled posts via Zernio and log activity.
+*   **AI-Powered Assistance:** Generate post descriptions and image prompts using Groq.
+*   **Media Support:** Upload images and videos to Supabase Storage with local fallback.
+*   **Activity Tracking:** Store activity logs and display recent publishing history.
 
 ---
 
@@ -54,8 +54,11 @@ social-schedular/
 │       └── pages/
 └── server/          # Express backend (TypeScript)
     ├── config/
+    ├── controllers/
+    ├── middleware/
     ├── routes/
     ├── services/
+    ├── inngest/      # Optional Inngest function definitions
     └── server.ts
 ```
 
@@ -63,13 +66,13 @@ social-schedular/
 
 ### Prerequisites
 - Node.js (v18+)
-- MongoDB Atlas account (or local MongoDB)
-- Cloudinary account
-- Google Gemini / Groq API keys (for AI features)
+- Supabase project with PostgreSQL and Storage bucket
+- Zernio account / API key
+- Groq API key
 
 ### 1. Clone the repo
 ```bash
-git clone [https://github.com/Tusharlalwani1/Social-media-Scheduler.git](https://github.com/Tusharlalwani1/Social-media-Scheduler.git)
+git clone https://github.com/Tusharlalwani1/Social-media-Scheduler.git
 cd Social-media-Scheduler
 ```
 
@@ -82,14 +85,23 @@ npm install
 Create a `.env` file inside `server/`:
 ```env
 PORT=3000
-MONGO_URI=your_mongodb_atlas_connection_string
+
+SUPABASE_URL=https://your-supabase-project.supabase.co
+SUPABASE_ANON_KEY=your_supabase_anon_key
+SUPABASE_SERVICE_ROLE_KEY=your_supabase_service_role_key
+
 JWT_SECRET=your_jwt_secret
-CLOUDINARY_NAME=your_cloudinary_name
-CLOUDINARY_API_KEY=your_cloudinary_api_key
-CLOUDINARY_API_SECRET=your_cloudinary_api_secret
-GOOGLE_GENAI_API_KEY=your_google_genai_key
+
 GROQ_API_KEY=your_groq_api_key
-```
+API_KEY=your_zernio_api_key
+# or ZERNIO_API_KEY=your_zernio_api_key
+
+# Inngest configuration
+INNGEST_SERVE_PATH=/api/inngest
+INNGEST_SERVE_ORIGIN=http://localhost:3000
+# Optional if your Inngest deployment requires signing
+# INNGEST_SIGNING_KEY=your_inngest_signing_key
+``` 
 
 Run the backend:
 ```bash
@@ -105,7 +117,7 @@ npm install
 
 Create a `.env` file inside `client/`:
 ```env
-VITE_API_BASE_URL=http://localhost:5000
+VITE_API_BASE_URL=http://localhost:3000
 ```
 
 Run the frontend:
@@ -114,11 +126,32 @@ npm run dev
 ```
 App will run at `http://localhost:5173`
 
+## 🧩 Important Notes
+
+* `server/inngest/inngestFunctions.ts` defines the Inngest cron and event functions. The Express app now serves them at `/api/inngest`.
+* The backend currently relies on Zernio for social account linking and publishing. Keep Zernio credentials in `.env`.
+* Groq is used for AI post content + prompt generation. Pollinations is a fallback image generator used by the AI generation route.
+* The previous MongoDB and Cloudinary references have been removed from the current backend implementation.
+
 ## 🌐 Deployment
 
-- **Backend**: Deployed on [Vercel](https://vercel.com)
-- **Frontend**: Deployed on [Vercel](https://vercel.com)
-- **Database**: [MongoDB Atlas](https://www.mongodb.com/atlas)
+- **Backend**: Backend is configured for Vercel via `server/vercel.json`.
+- **Frontend**: Frontend can be deployed on Vercel.
+- **Database**: Use Supabase PostgreSQL and Supabase Storage.
+
+## 🔧 What I need from you
+
+1. Add the required environment variables to `server/.env`:
+   * `SUPABASE_URL`
+   * `SUPABASE_ANON_KEY` or `SUPABASE_SERVICE_ROLE_KEY`
+   * `JWT_SECRET`
+   * `GROQ_API_KEY`
+   * `API_KEY` or `ZERNIO_API_KEY`
+   * `INNGEST_SERVE_PATH` (optional, default `/api/inngest`)
+   * `INNGEST_SERVE_ORIGIN` (optional, default `http://localhost:3000`)
+   * `INNGEST_SIGNING_KEY` (optional, if using Inngest request signing)
+
+2. Ensure your Supabase schema is applied and your `media` bucket exists.
 
 ## 📄 License
 

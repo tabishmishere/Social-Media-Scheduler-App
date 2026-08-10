@@ -1,7 +1,15 @@
-import cron from "node-cron";
 import supabase from "../config/supabase.js";
 import zernio from "../config/zernio.js";
 
+/**
+ * Finds all posts that are due for publishing (status = "scheduled" and
+ * scheduled_for <= now), atomically locks each one (status = "processing"),
+ * dispatches them to the connected social platforms via Zernio, and records
+ * activity logs.
+ *
+ * This function is a pure helper — it is invoked by Inngest functions
+ * (cron-triggered and event-triggered) rather than by an in-process timer.
+ */
 export const processDuePosts = async () => {
   try {
     const now = new Date().toISOString();
@@ -43,7 +51,7 @@ export const processDuePosts = async () => {
         if (accErr || matchingAccounts.length === 0) {
           console.log(`No connected Zernio Accounts found for post ${post.id}`);
           const errorReason = `No connected ${(post.platforms || []).join(", ")} account found. Please reconnect your account on the Accounts page.`;
-          
+
           await supabase
             .from("posts")
             .update({
@@ -103,7 +111,7 @@ export const processDuePosts = async () => {
       } catch (err: any) {
         const rawError = err?.response?.data?.message || err?.response?.data?.error || err?.message || "Failed to publish post";
         console.error(`Failed to publish post ${post.id} :`, err?.response?.data || err?.message);
-        
+
         const errorReason = typeof rawError === "object" ? JSON.stringify(rawError) : rawError;
 
         await supabase
@@ -121,13 +129,4 @@ export const processDuePosts = async () => {
   } catch (error) {
     console.log("Error in scheduler:", error);
   }
-};
-
-export const initScheduler = () => {
-  // Run scheduler check every 10 seconds in persistent environments
-  cron.schedule("*/10 * * * * *", async () => {
-    await processDuePosts();
-  });
-
-  console.log("Schedule Service Initialized");
 };
