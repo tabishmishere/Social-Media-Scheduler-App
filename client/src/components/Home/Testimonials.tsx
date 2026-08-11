@@ -2,23 +2,23 @@ import { StarIcon } from "lucide-react";
 
 const testimonials = [
     {
-        name: "Sarah K.",
+        name: "Tressa M.",
         role: "Marketing Manager",
-        avatar: "S",
+        avatar: "T",
         avatarBg: "from-indigo-500 to-violet-500",
         text: "Postflow has saved our team 10+ hours a week. The AI composer is genuinely impressive — it writes content that sounds like us.",
     },
     {
-        name: "Marcus L.",
-        role: "Indie Creator",
-        avatar: "M",
+        name: "Daniel R.",
+        role: "Software Developer",
+        avatar: "D",
         avatarBg: "from-violet-500 to-purple-600",
         text: "I used to dread posting. Now I queue up a whole week of content in 20 minutes. The smart scheduling feature alone is worth it.",
     },
     {
-        name: "Priya D.",
+        name: "Jordan L.",
         role: "Startup Founder",
-        avatar: "P",
+        avatar: "J",
         avatarBg: "from-indigo-600 to-cyan-500",
         text: "Finally a scheduler that's beautiful AND powerful. The clean dashboard makes it easy to see exactly what's going out and when.",
     },
