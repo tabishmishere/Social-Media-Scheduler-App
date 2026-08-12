@@ -22,7 +22,7 @@ function Sidebar({ isOpen, setIsOpen }: { isOpen: boolean, setIsOpen: (val: bool
 
         { name: 'Dashboard', icon: LayoutDashboardIcon, path: '/dashboard' },
         { name: 'Accounts', icon: UsersIcon, path: '/accounts' },
-        { name: 'Postflow', icon: CalendarDaysIcon, path: '/schedule' },
+        { name: 'Schedule', icon: CalendarDaysIcon, path: '/schedule' },
         { name: 'AI Generator', icon: Wand2Icon, path: '/ai-composer' },
     ]
     return (

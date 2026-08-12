@@ -8,7 +8,7 @@ const pageTitles: Record<string, string> = {
   "/dashboard": "Dashboard",
   "/accounts": "Social Accounts",
   "/schedule": "Postflow",
-  "/ai-composer": "AI Composer",
+  "/ai-composer": "AI Generator",
 };
 
 
@@ -60,7 +60,7 @@ const Layout = () => {
           <div>
             <h1 className="text-slate-900 font-medium text-lg">{title}</h1>
             <p className="text-sm text-slate-500 hidden sm:block">
-              Manage and automate your social presence
+              Manage and automate your social presence with AI-powered tools.
             </p>
           </div>
         </header>
