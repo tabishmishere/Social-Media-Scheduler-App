@@ -182,3 +182,15 @@ button {
 ::placeholder {
     opacity: 1;
 }
+
+/* Global text selection to match brand indigo (light shade) */
+::selection {
+    background-color: rgba(99, 102, 241, 0.16);
+    color: var(--color-text-main);
+}
+
+/* Firefox */
+::-moz-selection {
+    background-color: rgba(99, 102, 241, 0.16);
+    color: var(--color-text-main);
+}
