@@ -12,3 +12,5 @@ dist/
 coverage/
 .nyc_output/
 PROJECT_ANALYSIS.md
+DOCKER.md
+docker-compose.yml
