@@ -1,158 +1,79 @@
-# 🚀 Social Media Scheduler
+# Social Media Scheduler
 
-A full-stack social media scheduling application that empowers users to connect their social accounts, plan posts, and manage content seamlessly using Supabase, Zernio, and Groq.
+A full-stack social media management platform for creating content, connecting social accounts, scheduling posts, and tracking publishing activity from one dashboard.
 
-## 🔗 Live Demo
+## Overview
 
-*   **Frontend (Live):** [https://social-media-schedular-kx5s-topaz.vercel.app](https://social-media-schedular-kx5s-topaz.vercel.app)
-*   **Backend (API):** [https://social-media-schedular6.vercel.app](https://social-media-schedular6.vercel.app)
+Social Media Scheduler brings common publishing workflows into one product experience: authenticated account management, AI-assisted content creation, media uploads, scheduling, and publishing history. It is designed as a modern client-server application with managed cloud services for persistence, storage, and third-party social publishing.
 
----
+## Key Features
 
-## 🛠 Tech Stack
+- **Authentication and protected routes** using JWT-based sessions.
+- **Social account connection** through Zernio-powered OAuth flows.
+- **Post scheduling** for one or more connected platforms.
+- **Automated publishing workflow** for due posts, with status updates and failure tracking.
+- **AI content assistant** that generates post copy and image prompts with Groq.
+- **Media uploads** stored in Supabase Storage, supporting images and videos.
+- **Activity feed** that records publishing events and recent account activity.
+- **Responsive dashboard** for posts, accounts, and AI-generated content.
 
-### Frontend
-*   **Framework:** React (Vite)
-*   **Language:** TypeScript
-*   **Styling:** Tailwind CSS
-*   **Routing:** React Router
-*   **HTTP Client:** Axios
+## Technical Highlights
 
-### Backend
-*   **Runtime:** Node.js + Express
-*   **Language:** TypeScript (run via `tsx`)
-*   **Database:** Supabase PostgreSQL
-*   **Storage:** Supabase Storage
-*   **Authentication:** JWT (JSON Web Tokens)
-*   **Social Posting:** Zernio API
-*   **AI Integrations:** Groq SDK for text/image prompt generation
-*   **Task Scheduling:** Inngest cron and event functions served via `/api/inngest`
+- Built a TypeScript React single-page application using React Router, Axios, Tailwind CSS, and Vite.
+- Developed an Express API with modular controllers, routes, middleware, and services.
+- Integrated Supabase PostgreSQL for application data and Supabase Storage for media assets.
+- Implemented JWT authorization middleware to secure user-specific resources.
+- Integrated external APIs for social publishing (Zernio) and AI-assisted content generation (Groq).
+- Used Inngest functions to process scheduled publishing jobs and support event-driven automation.
+- Containerized the frontend and backend independently with Docker; Nginx serves the production frontend and proxies API requests to the Express service.
 
----
-
-## ✨ Features
-
-*   **Secure Authentication:** User sign-up and sign-in with JWT.
-*   **Social Connectivity:** OAuth integration to connect social media accounts via Zernio.
-*   **Content Management:** Create, schedule, and manage social media posts from a centralized dashboard.
-*   **Automated Publishing:** Publish scheduled posts via Zernio and log activity.
-*   **AI-Powered Assistance:** Generate post descriptions and image prompts using Groq.
-*   **Media Support:** Upload images and videos to Supabase Storage with local fallback.
-*   **Activity Tracking:** Store activity logs and display recent publishing history.
-
----
-
-## 📁 Project Structure
+## Architecture
 
 ```text
-social-schedular/
-├── client/          # React frontend (Vite)
-│   └── src/
-│       ├── api/
-│       ├── components/
-│       ├── context/
-│       └── pages/
-└── server/          # Express backend (TypeScript)
-    ├── config/
-    ├── controllers/
-    ├── middleware/
-    ├── routes/
-    ├── services/
-    ├── inngest/      # Optional Inngest function definitions
-    └── server.ts
+React + Vite client
+        |
+        | HTTP / API requests
+        v
+Express + TypeScript API
+   |        |        |
+   v        v        v
+Supabase  Zernio    Groq / Inngest
+Database  Publishing  AI / Scheduling
+Storage
 ```
 
-## ⚙️ Getting Started (Local Setup)
+## Tech Stack
 
-### Prerequisites
-- Node.js (v18+)
-- Supabase project with PostgreSQL and Storage bucket
-- Zernio account / API key
-- Groq API key
+| Area | Technologies |
+| --- | --- |
+| Frontend | React, TypeScript, Vite, React Router, Tailwind CSS, Axios |
+| Backend | Node.js, Express, TypeScript, `tsx` |
+| Data and storage | Supabase PostgreSQL, Supabase Storage |
+| Authentication | JWT, bcrypt |
+| Integrations | Zernio, Groq, Inngest |
+| Deployment and containers | Vercel, Docker, Docker Compose, Nginx |
 
-### 1. Clone the repo
-```bash
-git clone https://github.com/Tusharlalwani1/Social-media-Scheduler.git
-cd Social-media-Scheduler
+## Repository Structure
+
+```text
+client/                 React frontend
+  src/                  pages, components, API client, and application state
+  Dockerfile            production frontend image
+
+server/                 Express API
+  controllers/          request handling and application logic
+  routes/               API route definitions
+  services/             storage and scheduled publishing logic
+  inngest/              scheduled and event-driven functions
+  Dockerfile            backend image
+
+docker-compose.yml      runs client and server together
 ```
 
-### 2. Backend setup
-```bash
-cd server
-npm install
-```
+## Containerization
 
-Create a `.env` file inside `server/`:
-```env
-PORT=3000
+The project supports separate frontend and backend Docker images coordinated with Docker Compose. The frontend is served by Nginx, which also forwards `/api` requests to the backend container over Docker's internal network.
 
-SUPABASE_URL=https://your-supabase-project.supabase.co
-SUPABASE_ANON_KEY=your_supabase_anon_key
-SUPABASE_SERVICE_ROLE_KEY=your_supabase_service_role_key
+## Author
 
-JWT_SECRET=your_jwt_secret
-
-GROQ_API_KEY=your_groq_api_key
-API_KEY=your_zernio_api_key
-# or ZERNIO_API_KEY=your_zernio_api_key
-
-# Inngest configuration
-INNGEST_SERVE_PATH=/api/inngest
-INNGEST_SERVE_ORIGIN=http://localhost:3000
-# Optional if your Inngest deployment requires signing
-# INNGEST_SIGNING_KEY=your_inngest_signing_key
-``` 
-
-Run the backend:
-```bash
-npm start
-```
-Server will run at `http://localhost:3000`
-
-### 3. Frontend setup
-```bash
-cd ../client
-npm install
-```
-
-Create a `.env` file inside `client/`:
-```env
-VITE_API_BASE_URL=http://localhost:3000
-```
-
-Run the frontend:
-```bash
-npm run dev
-```
-App will run at `http://localhost:5173`
-
-## 🧩 Important Notes
-
-* `server/inngest/inngestFunctions.ts` defines the Inngest cron and event functions. The Express app now serves them at `/api/inngest`.
-* The backend currently relies on Zernio for social account linking and publishing. Keep Zernio credentials in `.env`.
-* Groq is used for AI post content + prompt generation. Pollinations is a fallback image generator used by the AI generation route.
-* The previous MongoDB and Cloudinary references have been removed from the current backend implementation.
-
-## 🌐 Deployment
-
-- **Backend**: Backend is configured for Vercel via `server/vercel.json`.
-- **Frontend**: Frontend can be deployed on Vercel.
-- **Database**: Use Supabase PostgreSQL and Supabase Storage.
-
-## 🔧 What I need from you
-
-1. Add the required environment variables to `server/.env`:
-   * `SUPABASE_URL`
-   * `SUPABASE_ANON_KEY` or `SUPABASE_SERVICE_ROLE_KEY`
-   * `JWT_SECRET`
-   * `GROQ_API_KEY`
-   * `API_KEY` or `ZERNIO_API_KEY`
-   * `INNGEST_SERVE_PATH` (optional, default `/api/inngest`)
-   * `INNGEST_SERVE_ORIGIN` (optional, default `http://localhost:3000`)
-   * `INNGEST_SIGNING_KEY` (optional, if using Inngest request signing)
-
-2. Ensure your Supabase schema is applied and your `media` bucket exists.
-
-## 📄 License
-
-ISC
+Built as a full-stack social media scheduling project showcasing frontend development, API design, third-party integrations, cloud data services, and containerized deployment.
